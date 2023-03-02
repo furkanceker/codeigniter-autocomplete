@@ -9,7 +9,8 @@ class Home extends CI_Controller {
     public function search(){
         $term = $this->input->get("term");
 
-        $rows = $this->db->select("title as value,id")->like("title",$term)->get("name")->result_array();
+        /* $rows = $this->db->select("title as value,id")->like("title",$term)->get("name")->result_array(); */
+        $rows = $this->db->query("SELECT title as value,id FROM name WHERE MATCH(title) AGAINST('$term')")->result_array();
         echo json_encode($rows);
     }
     
